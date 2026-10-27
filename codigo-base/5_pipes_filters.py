@@ -16,6 +16,10 @@ def calcular_multa(prestamos):              # $500 por día de atraso
     return [{**p, "multa": (p["dias"] - 14) * 500} for p in prestamos]
 
 
+def ordenar_por_multa(prestamos):           # de mayor a menor multa
+    return sorted(prestamos, key=lambda p: p["multa"], reverse=True)
+
+
 def formatear(prestamos):
     return [f"{p['estudiante']}: {p['titulo']} -> ${p['multa']}"
             for p in prestamos]
@@ -28,5 +32,5 @@ def tuberia(datos, filtros):
     return datos
 
 
-for linea in tuberia(PRESTAMOS, [solo_atrasados, calcular_multa, formatear]):
+for linea in tuberia(PRESTAMOS, [solo_atrasados, calcular_multa, ordenar_por_multa, formatear]):
     print(linea)
