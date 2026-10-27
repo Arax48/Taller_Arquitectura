@@ -22,7 +22,17 @@ class NotificadorConsola(Notificador):     # ADAPTADOR: una forma de cumplirlo
         print(f"[consola] para {estudiante}: {mensaje}")
 
 
+class NotificadorArchivo(Notificador):     # ADAPTADOR: guarda en archivo
+    def enviar(self, estudiante, mensaje):
+        with open("avisos.txt", "a", encoding="utf-8") as archivo:
+            archivo.write(f"para {estudiante}: {mensaje}\n")
+
+
 # ===== Aquí se escoge qué adaptador usar =====
-servicio = ServicioPrestamos(NotificadorConsola())
+servicio = ServicioPrestamos(NotificadorArchivo())
 servicio.prestar("ana", "Clean Architecture")
 servicio.prestar("luis", "Refactoring")
+
+# Imprimir el contenido de avisos.txt al final
+with open("avisos.txt", "r", encoding="utf-8") as archivo:
+    print(archivo.read())
