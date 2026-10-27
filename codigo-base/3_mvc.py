@@ -22,6 +22,13 @@ class VistaLista:                      # solo muestra
             print(f"  {titulo}: {estado}")
 
 
+class VistaResumen:                    # segunda vista agregada por el reto
+    def mostrar(self, catalogo):
+        libres = sum(catalogo.libros.values())
+        total = len(catalogo.libros)
+        print(f"Disponibles: {libres} de {total}")
+
+
 # =================== CONTROLADOR ===================
 class Controlador:                     # recibe la orden del usuario
     def __init__(self, catalogo):
@@ -35,5 +42,6 @@ class Controlador:                     # recibe la orden del usuario
 
 catalogo = Catalogo()
 catalogo.vistas.append(VistaLista())
+catalogo.vistas.append(VistaResumen())
 controlador = Controlador(catalogo)
 controlador.orden("prestar Refactoring")
