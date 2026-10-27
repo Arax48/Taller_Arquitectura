@@ -21,6 +21,12 @@ class ServicioPrestamos:
         self.repo.prestados.add(codigo)
         return f"Prestado: {self.repo.libros[codigo]}"
 
+    def devolver(self, codigo):
+        if codigo not in self.repo.prestados:
+            return "Ese libro no estaba prestado"
+        self.repo.prestados.remove(codigo)
+        return f"Devuelto: {self.repo.libros[codigo]}"
+
 
 # =============== Capa de presentación ===============
 class Consola:
@@ -30,9 +36,15 @@ class Consola:
     def ejecutar(self, accion, codigo):
         if accion == "prestar":
             print(self.servicio.prestar(codigo))
+        elif accion == "devolver":
+            print(self.servicio.devolver(codigo))
 
 
 consola = Consola(ServicioPrestamos(RepositorioLibros()))
 consola.ejecutar("prestar", "L1")
 consola.ejecutar("prestar", "L1")
 consola.ejecutar("prestar", "L9")
+
+# Pruebas requeridas por el reto
+consola.ejecutar("devolver", "L1")
+consola.ejecutar("prestar", "L1")
